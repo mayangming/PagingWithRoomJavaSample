@@ -33,8 +33,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rv);
         initRecycleView();
         initViewModel();
-        initPage();
-        initPage();
+        initPage1();
     }
 
     private void initViewModel() {
@@ -47,7 +46,14 @@ public class MainActivity extends AppCompatActivity {
                 insert();
                 break;
             case R.id.query:
-                query();
+//                query();
+
+                contactViewModel.getData().observe(this, new Observer<PagedList<ContactBean>>() {
+                    @Override
+                    public void onChanged(PagedList<ContactBean> contactBeans) {
+                        contactAdapter.submitList(contactBeans);
+                    }
+                });
                 break;
         }
     }
@@ -64,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 初始化分页加载库
      */
-    private void initPage() {
+    private void initPage1() {
         PagedList.Config config = new PagedList.Config.Builder()
                 .setPageSize(10)    //每页显示的词条数
                 .setEnablePlaceholders(false)
